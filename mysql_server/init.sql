@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS project_db;
-CREATE DATABASE project_db;
-USE project_db;
+CREATE DATABASE database_web;
+USE database_web;
 
 CREATE TABLE `Students`(
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

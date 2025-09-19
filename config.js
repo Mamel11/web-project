@@ -7,7 +7,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'project_db'
+    database: 'database_web'
 });
 
 //--------------- Helper Function to load data from file or fronted ---------------

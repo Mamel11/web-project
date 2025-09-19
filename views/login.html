@@ -1,0 +1,133 @@
+    <!DOCTYPE html>
+    <html lang="el">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Diogenis · Σύνδεση</title>
+    <link rel="icon" href="images/DemBrowserIcon.png" type="image/x-icon">
+
+    <style>
+        :root{
+        --bg1:#0f172a;
+        --bg2:#1f2937;
+        --panel:#ffffff;
+        --text:#0f172a;
+        --muted:#64748b;
+        --radius:18px;
+        }
+
+        body{
+        margin:0;
+        font-family: Inter, system-ui, sans-serif;
+        background: radial-gradient(1200px 600px at 20% -10%, #3b82f61a 0%, transparent 60%),
+                    radial-gradient(900px 500px at 120% 10%, #22c55e1a 0%, transparent 60%),
+                    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+        color: var(--text);
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        }
+
+        /* Navbar */
+        .navbar{
+        background: var(--panel);
+        border-bottom:1px solid #e2e8f0;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:12px 24px;
+        position:fixed;
+        top:0;left:0;right:0;
+        }
+        .navbar-brand{
+        display:flex;align-items:center;gap:8px;
+        text-decoration:none;color:var(--text);font-weight:600
+        }
+        .navbar-nav{display:flex;gap:20px}
+        .navbar-nav a{text-decoration:none;color:var(--muted);font-weight:500}
+        .navbar-nav a.active{color:var(--text)}
+
+        /* Container */
+        main{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:120px 20px 40px;
+        }
+
+        /* Card */
+        .auth-card{
+        background: var(--panel);
+        border-radius: var(--radius);
+        padding: 32px;
+        max-width:420px;
+        width:100%;
+        box-shadow:0 20px 60px rgba(0,0,0,.25);
+        }
+
+        .auth-title{font-size:26px;font-weight:700;margin:0 0 6px}
+        .auth-sub{color:var(--muted);margin:0 0 24px}
+
+        label{display:block;margin-bottom:6px;font-size:14px;font-weight:500}
+        .auth-input{
+        width:100%;padding:12px 14px;border:1px solid #cbd5e1;
+        border-radius:12px;font-size:15px;
+        }
+        .auth-input:focus{outline:2px solid #3b82f6;border-color:#3b82f6}
+
+        .auth-btn{
+        width:100%;margin-top:16px;
+        padding:12px 14px;font-size:16px;font-weight:600;
+        background:#3b82f6;color:#fff;border:none;border-radius:12px;cursor:pointer;
+        }
+        .auth-btn:hover{background:#2563eb}
+    </style>
+    </head>
+    <body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="index.html">
+        <img src="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" 
+            alt="Diogenis" width="36" height="36" style="border-radius:50%">
+        <span>Diogenis</span>
+        </a>
+        <div class="navbar-nav">
+        <a href="/announcements">Ανακοινώσεις</a>
+        <a href="/login" class="active">Σύνδεση</a>
+        </div>
+    </nav>
+
+    <!-- Login -->
+    <main>
+        <section class="auth-card">
+        <h1 class="auth-title">Σύνδεση</h1>
+        <p class="auth-sub">Χρησιμοποίησε τον ακαδημαϊκό σου λογαριασμό</p>
+
+        <form action="/login" method="POST">
+            <div class="mb-3">
+            <label for="email">Διεύθυνση Email</label>
+            <input type="email" id="email" name="email" class="auth-input" placeholder="email@domain.gr" required>
+            </div>
+
+            <div class="mb-2">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="auth-input" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="auth-btn">Σύνδεση</button>
+        </form>
+        </section>
+    </main>
+
+    <!-- Auth check -->
+    <script>
+        fetch('/api/check-auth', { credentials: 'include' })
+        .then(r => r.json())
+        .then(d => { if (d.isAuthenticated) { window.location.href = d.role === 'professor' ? '/professor' : '/student'; }})
+        .catch(() => {});
+    </script>
+
+    </body>
+    </html>
