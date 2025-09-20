@@ -27,10 +27,10 @@ db.query('SELECT 1', (err, results) => {
 //-------------- Set Index file and the public folder --------------
 app.use(express.static('public', {
     index: 'index.html',
-    maxAge: '0'
+    maxAge: '1d'
 }));
 app.use(express.static(path.join(__dirname, 'views'), {
-    maxAge: '0', // Cache ttl 1 day
+    maxAge: '1d', // Cache ttl 1 day
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
