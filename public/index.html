@@ -1,129 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="el">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Democritus - online thesis platform </title>
-  <!------------------ Bootstrap CSS ------------------>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!------------------ Bootstrap Bundle with Popper ------------------>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="icon" href="images/DemBrowserIcon.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diogenis · Αρχική</title>
+  <meta name="description" content="Πλατφόρμα διπλωματικών εργασιών: διαχείριση θεμάτων, επιτροπών και παρουσιάσεων με σαφείς ρόλους." />
+  <meta property="og:title" content="Diogenis · Your Online Thesis Platform" />
+  <meta property="og:description" content="Η διπλωματική εργασία, οργανωμένα σε ένα περιβάλλον με σαφείς ρόλους." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="el_GR" />
+  <link rel="icon" href="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    section {
-      padding: 30px 0;
+    /* Vars από student.html */
+    :root{
+      --bg1:#6078b0;
+      --bg2:#0f172a;
+      --panel:#ffffff;
+      --text:#ffffff;
+      --muted:#9fb2c7;
+      --radius:18px;
+      --blue:#27519f;
+      --blue-600:#2563eb;
+      --stroke:#ffffff;
+
+      /* νέο skin */
+      --panel-dark:#c4af6828;
+      --panel-dark-2:#b4b86028;
+      --panel-edge:#0b1322;
+      --panel-glow: rgba(0,0,0,.35);
+      --heading:#171717;
+      --muted-2:#9fb2c7;
+      --divider: rgba(255,255,255,.06);
+      --radius-xl:22px;
+      --shadow:0 22px 40px var(--panel-glow), inset 0 1px 0 rgba(255,255,255,.03);
     }
 
-    .carousel-inner {
-      padding: 1em;
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Inter, system-ui, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #ececec1a 0%, transparent 60%),
+        radial-gradient(900px 500px at 120% 10%, #22c55e1a 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1) 100%, var(--bg2) 0%);
+      display:flex; flex-direction:column; min-height:100vh;
     }
 
-    .cards-wrapper {
-      display: flex;
-      gap: 1em;
+    /* Navbar ίδιο ύφος με student */
+    .navbar{
+      background: rgba(122, 42, 146, 0.7) !important;
+      border-bottom:1px solid var(--stroke);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 24px; position:fixed; top:0; left:0; right:0; z-index:10;
+    }
+    .navbar-brand{
+      display:flex; align-items:center; gap:8px; text-decoration:none; color:#fff; font-weight:600
+    }
+    .navbar-brand img{border-radius:50%}
+    .navbar-nav{display:flex; flex-direction: row; gap:20px}
+    .navbar .navbar-nav a{
+      text-decoration:none; color:#f1f5f9; font-weight:500;
+      padding:.5rem .75rem; border-bottom:2px solid transparent;
+    }
+    .navbar .navbar-nav a:focus,
+    .navbar .navbar-nav a:hover{
+      color:#fff; border-bottom-color: var(--blue);
     }
 
-    .card {
-      flex: 1;
-      max-width: 300px;
+    main{
+      flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+      padding:120px 24px 48px; max-width:1080px; width:100%; margin:0 auto;
     }
 
-    .carousel-control-prev,
-    .carousel-control-next {
-      width: 3rem;
-      height: 3rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    /* Τυπογραφία hero */
+    .hero-title{font-size:48px; line-height:1.1; margin:0 0 12px; color:#e7f0ff}
+    .hero-sub{font-size:24px; margin:0 0 18px; color:#dbe7ff}
+    .hero-desc{color:#cfe1ff; margin:0 0 24px; max-width:52ch}
 
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      background-size: 1rem;
+    /* Κουμπιά όπως στο student */
+    .btn{display:inline-flex; align-items:center; justify-content:center; padding:12px 16px; border-radius:12px; font-weight:700; border:1px solid transparent; cursor:pointer; text-decoration:none; font-size:16px}
+    .btn-primary{background:var(--blue); color:#fff}
+    .btn-primary:hover{background:var(--blue-600)}
+    .btn-ghost{background:transparent; color:#e8f0ff; border:1px solid #47618f}
+    .btn-ghost:hover{background:#2a3652}
+
+    .section{padding:8px 24px 56px; max-width:1080px; width:100%; margin:0 auto}
+    .section-title{color:#e5e7eb; font-size:24px; margin:0 0 16px; text-align:center}
+
+    /* Κάρτες με ίδιο gradient skin */
+    .grid{display:grid; gap:20px; grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:700px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background: linear-gradient(180deg, var(--panel-dark) 0%, var(--panel-dark-2) 100%);
+      border:1px solid var(--panel-edge);
+      border-radius: var(--radius-xl);
+      overflow:hidden; display:flex; flex-direction:column;
+      box-shadow: var(--shadow);
     }
+    .card img{width:100%; height:220px; object-fit:contain; background:transparent}
+    .card-body{padding:15px}
+    .card-title{margin:0 0 6px; font-size:20px; font-weight:700; color:#e7f0ff}
+    .card-sub{margin:0 0 12px; color:var(--muted-2)}
+    .card .btn{width:100%}
+
+    footer{color:#94a3b8; font-size:14px; text-align:center; padding:16px 0 24px}
+    a:focus-visible, button:focus-visible{outline:3px solid #93c5fd; outline-offset:2px; border-radius:12px}
   </style>
 </head>
-
 <body>
-  <!------------------ Navbar ------------------>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-item dropdown">
-    <a class="navbar-brand px-3 fs-4" href="student">
-      <img src="images/DemIcon.png" alt="Democritus" width="40" height="40"> Democritus
+  <nav class="navbar" aria-label="Κύρια πλοήγηση">
+    <a class="navbar-brand" href="student">
+      <img src="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" alt="Λογότυπο Diogenis" width="36" height="36" decoding="async">
+      <span>Diogenis</span>
     </a>
-    <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainnav"
-      aria-controls="mainnav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse mx-3" id="mainnav">
-      <div class="navbar-nav fs-5">
-        <a class="nav-item nav-link" href="/announcements">Ανακοινώσεις</a>
-        <a class="nav-item nav-link" href="/login">Σύνδεση</a>
-      </div>
+    <div class="navbar-nav" role="navigation">
+      <a href="/announcements">Ανακοινώσεις</a>
+      <a href="/login">Σύνδεση</a>
     </div>
   </nav>
 
-  <!------------------ Main Area ------------------>
-  <section id="intro">
-    <div class="container-lg">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-md-6 pt-5 text-center text-md-start">
-          <h1>
-            <div class="display-2 text-muted">Democritus</div>
-            <div class="display-5 text-primary"> Your Online Thesis Platform</div>
-          </h1>
-          <p class="lead my-4 text-bolder">Η διπλωματική σας εργασία, με ένα κλικ.</p>
-          <a href="/login" class="btn btn-outline-danger btn-lg">Σύνδεση με upnet</a>
-
-        </div>
-        <div class="col-md-5 pt-5 text-center d-none d-md-block">
-          <img class="img-fluid" src="images/homeJPG.jpg" alt="hands">
-        </div>
+  <main>
+    <section aria-labelledby="hero-heading">
+      <h1 id="hero-heading" class="hero-title">Diogenis</h1>
+      <h2 class="hero-sub">Διαδικτυακή Διαχείρηση Διπλωματικής </h2>
+      <p class="hero-desc">Ολοκληρωμένη διαχείριση διπλωματικών εργασιών: θέματα, επιτροπές και παρουσιάσεις, όλα σε ένα ενιαίο περιβάλλον!</p>
+      <div class="hero-cta">
+        <a href="/login" class="btn btn-primary" aria-label="Σύνδεση με upnet">Σύνδεση με upnet</a>
+        <a href="/announcements" class="btn btn-ghost">Ανακοινώσεις</a>
       </div>
+    </section>
+  </main>
+
+  <section class="section" aria-labelledby="start-now">
+    <h3 id="start-now" class="section-title">Πάμε να ξεκινήσουμε;</h3>
+    <div class="grid">
+      <article class="card">
+        <img src="https://thumbs.dreamstime.com/b/set-diverse-college-university-students-vector-group-students-cartoon-illustration-students-66686172.jpg" alt="Εικονογράφηση φοιτητών" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+        <div class="card-body">
+          <h4 class="card-title">Φοιτητές</h4>
+          <p class="card-sub">Αίτηση θέματος, πρόοδος, παραδόσεις, παρουσίαση.</p>
+          <a href="/login" class="btn btn-primary" aria-label="Έναρξη για Φοιτητές">Ας ξεκινήσουμε</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="https://www.shutterstock.com/image-vector/senior-teacher-professor-standing-front-600nw-519575419.jpg" alt="Εικονογράφηση καθηγητή" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+        <div class="card-body">
+          <h4 class="card-title">Καθηγητές</h4>
+          <p class="card-sub">Διαχείριση θεμάτων, προσκλήσεις επιτροπών, αξιολόγηση.</p>
+          <a href="/login" class="btn btn-primary" aria-label="Έναρξη για Καθηγητές">Ας ξεκινήσουμε</a>
+        </div>
+      </article>
     </div>
   </section>
 
-  <!------------------ Start Now Section ------------------>
-  <section id="types" class="bg-light mt-5">
-    <div class="container-lg">
-      <div class="text-center">
-        <h2>Ξεκίνα τώρα!</h2>
-        <div class="row my-5 align-items-center justify-content-center">
-          <div class="col-8 col-lg-4 col-xl-3">
-            <div class="card">
-              <img src="images/unistudent.jpg" alt="student" class="card-img-top">
-              <div class="card-body text-center py-4">
-                <h5 class="card-title">Φοιτητές</h4>
-                  <p class="card-subtitle">
-                  </p>
-                  <a href="/login" class="btn btn-outline-primary btn-lg mt-3">Ας ξεκινήσουμε!</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-8 col-lg-4 col-xl-3">
-            <div class="card">
-              <img src="images/uniprofessor.jpg" alt="professor" class="card-img-top">
-              <div class="card-body text-center py-4">
-                <h5 class="card-title">Καθηγητές</h4>
-                  <p class="card-subtitle">
-                  </p>
-                  <a href="/login" class="btn btn-outline-primary btn-lg mt-3">Ας ξεκινήσουμε!</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <footer>© 2025 Diogenis</footer>
 
-
-
-  <!------------------ Bootstrap JS ------------------>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
-
 </html>

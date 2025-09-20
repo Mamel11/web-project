@@ -4,77 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diogenis · Ανακοινώσεις</title>
-  <link rel="icon" href="images/DemBrowserIcon.png" type="image/x-icon">
+  <link rel="icon" href="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" type="image/x-icon">
   <!-- Bootstrap (μένει για το dropdown & grid) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <style>
+    /* === Vars από student.html === */
     :root{
-      --bg1:#0f172a; --bg2:#1f2937;
-      --panel:#ffffff; --text:#ffffff; --muted:#64748b; --border:#e2e8f0;
-      --primary:#3b82f6; --primary-600:#2563eb; --radius:18px;
-      --ring: 0 0 0 3px rgba(59,130,246,.35);
+      --bg1:#6078b0;
+      --bg2:#0f172a;
+      --panel:#ffffff;
+      --text:#ffffff;
+      --muted:#9fb2c7;
+      --radius:18px;
+      --blue:#27519f;
+      --blue-600:#2563eb;
+      --stroke:#ffffff;
+
+      /* νέο skin */
+      --panel-dark:#727b96fb;
+      --panel-dark:#54649bfb;
+      --panel-dark-2:#6d7787;
+      --panel-edge:#0b1322;
+      --panel-glow: rgba(0,0,0,.35);
+      --heading:#171717;
+      --muted-2:#9fb2c7;
+      --divider: rgba(255,255,255,.06);
+      --radius-xl:22px;
     }
-    @media (prefers-color-scheme: dark){
-      :root{ --panel:#0b1220; --text:#ffffff; --muted:#9aa3ad; --border:#263246; }
-    }
+
+    /* Base */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family: Inter, system-ui, sans-serif; color:var(--text);
+      margin:0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
       background:
-        radial-gradient(1200px 600px at 20% -10%, #3b82f61a 0%, transparent 60%),
+        radial-gradient(1200px 600px at 20% -10%, #ececec1a 0%, transparent 60%),
         radial-gradient(900px 500px at 120% 10%, #22c55e1a 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+        linear-gradient(180deg, var(--bg1) 100%, var(--bg2) 0%);
       min-height:100vh;
-      padding-top:64px;
+      padding-top:96px; /* fixed navbar offset */
     }
 
-    /* Navbar (ίδιο ύφος με login) */
+    /* Navbar ίδιο με student */
     .navbar{
-      background:var(--panel)!important; border-bottom:1px solid var(--border);
-      position:fixed; top:0; left:0; right:0; z-index:1000; padding:12px 16px;
+      background: rgba(122, 42, 146, 0.7) !important;
+      border-bottom:1px solid var(--stroke);
+      position:fixed; inset:0 0 auto 0; z-index:1000;
+      padding:12px 24px;
     }
     .navbar-brand{
-      display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text)!important;
+      display:flex; align-items:center; gap:8px;
+      text-decoration:none; color:#fff !important; font-weight:600;
     }
     .navbar-brand img{border-radius:50%; width:36px; height:36px; object-fit:cover}
-    .navbar-nav .nav-link{color:var(--muted)!important; font-weight:600}
-    .navbar-nav .nav-link.active, .navbar-nav .nav-link[aria-current="page"]{color:var(--text)!important}
+    .navbar .navbar-nav .nav-link{
+      color:#f1f5f9 !important; font-weight:500;
+      padding:.5rem .75rem; border-bottom:2px solid transparent;
+    }
+    .navbar .navbar-nav .nav-link.active,
+    .navbar .navbar-nav .nav-link:focus,
+    .navbar .navbar-nav .nav-link:hover{
+      color:#fff !important;
+      border-bottom-color: var(--blue);
+    }
+    .navbar .btn{
+      background: rgba(122, 42, 146, 0.7);
+      color:#fff;
+      border:1px solid #000000;
+      border-radius:12px;
+      font-weight:600;
+      padding:.5rem .9rem;
+      transition: background .2s ease;
+    }
+    .navbar .btn:hover{ background: transparent; color:#fff; }
 
-    /* Cards */
+    /* Κάρτες: ίδιο gradient skin */
     .card{
-      background:var(--panel); border:1px solid var(--border)!important;
-      border-radius:var(--radius)!important; box-shadow:0 20px 60px rgba(0,0,0,.25);
+      background: linear-gradient(180deg, var(--panel-dark) 0%, var(--panel-dark-2) 100%) !important;
+      border:1px solid var(--panel-edge) !important;
+      border-radius: var(--radius-xl) !important;
+      box-shadow: 0 22px 40px var(--panel-glow), inset 0 1px 0 rgba(255,255,255,.03);
+      overflow:hidden;
     }
     .card-header{
-      background:transparent; border-bottom:1px solid var(--border)!important;
-      border-top-left-radius:var(--radius)!important; border-top-right-radius:var(--radius)!important;
-      padding:14px 18px;
+      background:transparent !important; border:0 !important;
+      padding:22px 28px 12px;
     }
-    .card-title{margin:0; font-weight:800; color:var(--text)}
-    .card-subtitle{color:var(--muted)!important}
-
-    /* Filters dropdown content */
-    .filters-panel{min-width:300px}
-    .form-label{font-weight:700}
-    .form-control, .btn{
-      border-radius:12px!important; border:1px solid var(--border)!important; background:transparent; color:var(--text);
-    }
-    .btn-primary{
-      background:var(--primary)!important; border-color:transparent!important; color:#fff!important; font-weight:800;
-    }
-    .btn-primary:hover{background:var(--primary-600)!important}
-    .btn-secondary{color:var(--text)!important}
-    .btn:focus, .form-control:focus{box-shadow:var(--ring)!important; border-color:var(--primary)!important; outline:none}
-
-    /* Sections */
-    section{padding:20px 0}
-    #announcements-section{margin-top:4px}
+    .card-title{margin:0; font-weight:800; color:#e7f0ff}
+    .card-subtitle{color:var(--muted-2)!important}
     #announcements-container .card{height:100%}
 
-    /* Footer controls */
+    /* Τυπογραφία ενοτήτων */
+    section h2, section h3, section h4{ color: var(--heading); font-weight:800; letter-spacing:.3px; text-shadow:0 1px 0 rgba(0,0,0,.2) }
+
+    /* Inputs / Buttons ίδιο στυλ */
+    .form-control, .btn{
+      border-radius:12px !important;
+    }
+    .form-control{
+      background:#fff; border:1px solid #cbd5e1; color:#0f172a;
+      padding:.65rem .8rem; font-size:15px;
+    }
+    .form-control:focus{
+      outline:2px solid var(--blue); border-color: var(--blue);
+      box-shadow:none !important;
+    }
+    .btn-primary{
+      background: var(--blue) !important; border:none !important; color:#fff !important; font-weight:700;
+    }
+    .btn-primary:hover{ background: var(--blue-600) !important }
+    .btn-secondary{
+      color: var(--blue) !important; border:1px solid var(--blue) !important; background:transparent !important;
+      font-weight:600;
+    }
+    .btn-secondary:hover{ background: var(--blue) !important; color:#fff !important }
+
+    /* Dropdown panel εμφάνιση */
+    .filters-panel{
+      min-width:300px;
+      background: linear-gradient(180deg, var(--panel-dark) 0%, var(--panel-dark-2) 100%);
+      border:1px solid var(--panel-edge);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 22px 40px var(--panel-glow), inset 0 1px 0 rgba(255,255,255,.03);
+    }
+    .dropdown-menu{ padding:0.75rem !important }
+    .form-label{font-weight:700; color:#e8f0ff}
+
+    /* Διαχωριστικές γραμμές */
+    hr{
+      border:0; height:1px;
+      background: linear-gradient(90deg, transparent, var(--divider), transparent);
+      margin:16px 0;
+    }
+
+    /* Χρώματα muted */
+    .text-muted, .muted{ color: var(--muted-2) !important }
+
+    /* Footer controls γραμμή */
     .controls-row{display:flex; align-items:center; gap:10px; padding:10px 16px}
   </style>
 </head>
@@ -151,6 +221,7 @@
       Εξαγωγή σε JSON
     </button>
   </div>
+<footer class="text-center" style="color: rgb(0, 0, 0);">© 2025 Diogenis</footer>
 
   <!-- JS -->
   <script src="/javascript/announcements_script.js"></script>

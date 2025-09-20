@@ -1,157 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="el">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Democritus-Administrator</title>
-    <!------------------ Bootstrap CSS ------------------>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="icon" href="images/DemBrowserIcon.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diogenis · Administrator</title>
+  <link rel="icon" href="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!------------------ CSS ------------------>
-    <style>
-        .main-content {
-            margin-left: 50px;
-            margin-right: 50px;
-        }
+  <!-- Professor skin -->
+  <style>
+    /* Base tokens (kept) */
+    :root{
+      --bg1:#6078b0;
+      --bg2:#0f172a;
+      --text:#ffffff;
+      --blue:#27519f;
+      --blue-600:#2563eb;
+      --stroke:#c9d0ea;
 
-        .header {
+      --panel-dark:#c4af6828;
+      --panel-dark-2:#b4b86028;
+      --panel-edge:#0b1322;
+      --panel-glow: rgba(0,0,0,.35);
+      --heading:#171717;
+      --muted-2:#9fb2c7;
+      --divider: rgba(255,255,255,.06);
+      --card_statistic:#a0a0c2ac;
+      --radius-xl:22px;
 
-            padding-top: 80px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      --shadow:0 22px 40px var(--panel-glow);
+      --border:#e2e8f0;
+    }
 
-        .navbar-nav .nav-link {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: calc(1rem + 0.2vw);
-        }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #ececec1a 0%, transparent 60%),
+        radial-gradient(900px 500px at 120% 10%, #22c55e1a 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1) 100%, var(--bg2) 0%);
+      min-height:100vh;
+    }
 
-        .navbar-nav .nav-link.active {
-            font-weight: bold;
-            color: #0d6efd;
-            border-bottom: 2px solid #0d6efd;
-        }
-    </style>
+    /* Navbar to match professor skin */
+    .navbar{
+      background: rgba(122, 42, 146, 0.7) !important;
+      border-bottom:1px solid var(--stroke) !important;
+      box-shadow:none !important;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 24px; position:fixed; top:0; left:0; right:0; z-index:10;
+    }
+    .navbar-brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:#fff !important; font-weight:700}
+    .navbar-brand img{border-radius:50%}
+    .navbar-nav{display:flex; flex-direction: row; gap:20px}
+    .navbar-nav .nav-link{
+      color:#f1f5f9 !important;
+      border-bottom:2px solid transparent;
+      padding:.5rem .75rem;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link.active{
+      color:#fff !important;
+      border-bottom-color:var(--blue) !important;
+    }
+    .logout-btn.btn{
+      background: rgba(122, 42, 146, 0.7);
+      color:#fff; border:1px solid #000; border-radius:12px; font-weight:600; padding:.5rem .9rem;
+    }
+    .logout-btn.btn:hover{background:transparent; color:#fff}
+
+    /* Layout */
+    main{padding:120px 24px 48px; max-width:1200px; margin:0 auto}
+    .section-title{color:#e2e8f0; font-size:24px; margin:0 0 16px; text-align:center}
+    .headerbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px}
+    .headerbar h3{color:#eef2ff; margin:0}
+    .content-gap{display:grid; gap:20px}
+
+    /* Panels adopt professor “card” look */
+    .panel{
+      background: linear-gradient(180deg, var(--card_statistic)) !important;
+      border:1px solid var(--panel-edge) !important;
+      border-radius: var(--radius-xl) !important;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.03) !important;
+      padding:20px;
+      color:#e8f0ff;
+    }
+    .panel h5{margin:0 0 10px; color:#e7f0ff}
+
+    /* Buttons */
+    .btn-primary{
+      background: var(--blue) !important; border:none !important; color:#fff !important;
+      border-radius:12px !important; font-weight:700 !important;
+    }
+    .btn-primary:hover{ background: var(--blue-600) !important }
+    .btn-outline-primary{
+      color: var(--blue) !important; border:1px solid var(--blue) !important; border-radius:12px !important;
+    }
+    .btn-outline-primary:hover{ background: var(--blue) !important; color:#fff !important }
+    .btn-secondary{ border-radius:12px !important }
+
+    /* Inputs */
+    .form-control, .form-select, .input-group-text{
+      background:#fff !important; color:#0f172a !important;
+      border:1px solid #cbd5e1 !important; border-radius:12px !important;
+    }
+    .form-control:focus, .form-select:focus{
+      outline:2px solid var(--blue) !important; border-color: var(--blue) !important; box-shadow:none !important;
+    }
+    a:focus-visible, button:focus-visible{outline:3px solid #93c5fd; outline-offset:2px; border-radius:12px}
+
+    /* Tables */
+    .table{margin:0; background:transparent !important; color:#e8f0ff}
+    .table thead{background:transparent; border-bottom:1px solid var(--divider)}
+    .table th{color:#e7f0ff; border-color:var(--divider) !important}
+    .table td{border-color:var(--divider) !important}
+    .table-hover tbody tr:hover{background-color:rgba(255,255,255,.03)}
+
+    /* Dropdown menu inside filters */
+    .dropdown-menu{
+      background:rgba(10,14,25,.92);
+      border:1px solid var(--panel-edge);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      color:#e8f0ff;
+    }
+    .dropdown-item{color:#e8f0ff}
+    .dropdown-item:hover{background:rgba(255,255,255,.06)}
+
+    /* Muted text */
+    .text-muted{color:var(--muted-2)!important}
+
+    /* Footer */
+    footer{color:#94a3b8; font-size:14px; text-align:center; padding:16px 0 24px}
+      /* Κουμπί "Φιλτράρισμα" */
+    #administratorDashboardSection .btn.dropdown-toggle{
+      background:#7c3aed;           /* νέο χρώμα */
+      color:#fff;
+      border-color:#6d28d9;
+      border-radius:12px;
+    }
+    #administratorDashboardSection .btn.dropdown-toggle:hover,
+    #administratorDashboardSection .btn.dropdown-toggle:focus,
+    #administratorDashboardSection .btn.show{
+      background:#6d28d9;           /* hover/active */
+      color:#fff;
+    }
+
+/* Το πάνελ του dropdown */
+    #administratorDashboardSection .dropdown-menu{
+      background:#0b1322;           /* φόντο μενού */
+      border:1px solid #1f2a44;
+      border-radius:14px;
+      color:#e8f0ff;
+    }
+    #administratorDashboardSection .dropdown-item{color:#e8f0ff}
+    #administratorDashboardSection .dropdown-item:hover{background:#1f2a44}
+    #administratorDashboardSection .dropdown-divider{border-top-color:rgba(255,255,255,.12)}
+
+  </style>
 </head>
-
 <body>
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="Κύρια πλοήγηση">
+    <a class="navbar-brand" href="administrator">
+      <img src="https://1epal-dafnis.mysch.gr/bima/ergask/history/mega/diogen_htm_files/14.jpg" alt="Diogenis" width="36" height="36" decoding="async">
+      <span>Diogenis</span>
+    </a>
+    <div class="navbar-nav" role="navigation">
+      <a class="nav-item nav-link" href="#administratorDashboardSection">Λίστα Διπλωματικών</a>
+      <a class="nav-item nav-link" href="#administratorInsertDataSection">Εισαγωγή Δεδομένων</a>
+    </div>
+    <button type="button" class="btn btn-outline-secondary logout-btn" id="logout-btn">Έξοδος</button>
+  </nav>
 
-    <!------------------ Navbar ------------------>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top nav-item dropdown">
-        <a class="navbar-brand px-3 fs-4" href="administrator">
-            <img src="images/DemIcon.png" alt="Democritus" width="40" height="40"> Democritus
-        </a>
-        <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainnav"
-            aria-controls="mainnav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mx-3" id="mainnav">
-            <div class="navbar-nav fs-5">
-                <a class="nav-item nav-link" href="#administratorDashboardSection">Λίστα Διπλωματικών</a>
-                <a class="nav-item nav-link" href="#administratorInsertDataSection">Εισαγωγή Δεδομένων</a>
+  <main>
+    <!-- Dashboard Section -->
+    <section id="administratorDashboardSection" class="content-section" aria-labelledby="theses-list-heading">
+      <div class="headerbar">
+        <h3 id="theses-list-heading">Λίστα Διπλωματικών</h3>
+      </div>
+
+      <div class="panel">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Φιλτράρισμα</button>
+            <div class="dropdown-menu p-3" style="min-width:260px">
+              <h5 class="mb-2">Κατάσταση Διπλωματικής</h5>
+              <a class="dropdown-item" href="#" data-type="status" data-value="assigned">Υπό Ανάθεση</a>
+              <a class="dropdown-item" href="#" data-type="status" data-value="active">Ενεργή</a>
+              <div class="dropdown-divider my-2"></div>
+              <h5 class="mb-2">Αναζήτηση Καθηγητή</h5>
+              <div class="input-group mb-2">
+                <input type="text" id="administratorFilterProfessorSearch" class="form-control" placeholder="Αναζήτηση καθηγητή..." aria-label="Αναζήτηση καθηγητή">
+              </div>
+              <ul id="administratorProfessorSearchResults" class="dropdown-menu show position-static w-100"></ul>
+              <div class="d-flex justify-content-end gap-2">
+                <a class="btn btn-outline-danger btn-sm" href="#" onclick="clearFilters()">Αναίρεση Φίλτρου</a>
+              </div>
             </div>
-            <button type="button" class="nav-item btn btn-outline-secondary ms-auto mx-4"
-                id="logout-btn">Έξοδος</button>
-        </div>
-    </nav>
-
-    <!------------------ Main Content ------------------>
-    <div class="main-content">
-
-        <!---------- Dashboard Section with Thesis List  ---------->
-        <div id="administratorDashboardSection" class="content-section" style="display:none;">
-            <h3 class="text-center mt-5 pt-5 pb-3">Λίστα Διπλωματικών</h3>
-
-            <div class="container">
-                <div class="row">
-                    <div id="theses-compartment" class="col-lg-12 mx-auto">
-                        <div class="border p-3 rounded">
-                            <div class="btn-group">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Φιλτράρισμα
-                                </button>
-                                <div class="dropdown-menu" style="min-width: 200px; padding: 15px;">
-                                    <h5 style="margin-bottom: 10px;">Κατάσταση Διπλωματικής</h5>
-                                    <a class="dropdown-item" href="#" data-type="status" data-value="assigned">Υπό
-                                        Ανάθεση</a>
-                                    <a class="dropdown-item" href="#" data-type="status" data-value="active">Ενεργή</a>
-
-                                    <div class="dropdown-divider" style="margin: 10px 0;"></div>
-                                    <h5 style="margin-bottom: 10px;">Αναζήτηση Καθηγητή</h5>
-                                    <div class="input-group" style="margin-bottom: 10px;">
-                                        <input type="text" id="administratorFilterProfessorSearch" class="form-control"
-                                            placeholder="Αναζήτηση καθηγητή..." aria-label="Αναζήτηση καθηγητή"
-                                            style="width: 90%;">
-                                    </div>
-                                    <ul id="administratorProfessorSearchResults" class="dropdown-menu">
-                                    </ul>
-                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                                        <a class="btn btn-outline-danger btn-sm" href="#"
-                                            onclick="clearFilters()">Αναίρεση Φίλτρου</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <table id="theses" class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Τίτλος</th>
-                                        <th scope="col">Επιβλέπων</th>
-                                        <th scope="col">Κατάσταση</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!---------- Theses Info and Management Section ---------->
-                    <div class="d-flex mt-4">
-                        <div id="administratorThesesInfoSection" class="col-md-6  p-3 rounded me-3"
-                            style="display:none;">
-                        </div>
-                        <div id="administratorThesesManagementSection" class="col-md-6  p-3 rounded"
-                            style="display:none;">
-                        </div>
-                    </div>
-                    <p> </p>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <!---------- Insert Data Section ---------->
-        <div id="administratorInsertDataSection" class="content-section" style="display:none;">
-            <h3 class="text-center mt-5 pt-5 pb-3">Εισαγωγή Δεδομένων</h3>
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="card col-lg-5">
-                    <div class="card-header">
-                        <h5 class="text-center">Εισάγετε δεδομένα προς ανάρτηση στη βάση δεδομένων</h5>
-                    </div>
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <p class="text-success mt-1" id="adminUploadDataLabelArea"></p>
-                        <input class="form-control  my-1 w-50" type="file" id="adminUploadDataButton" accept=".json">
-                        <h6 class="text-center mb-3">Επιτρέοπονται μόνο αρχεία JSON</h6>
-                    </div>
-                    <div class="card-footer">
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive">
+          <table id="theses" class="table table-striped table-hover align-middle">
+            <thead>
+              <tr>
+                <th scope="col" style="color: rgb(97, 94, 94);">ID</th>
+                <th scope="col" style="color: rgb(97, 94, 94);">Τίτλος</th>
+                <th scope="col" style="color: rgb(97, 94, 94);">Επιβλέπων</th>
+                <th scope="col" style="color: rgb(97, 94, 94);">Κατάσταση</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
+      </div>
 
-        
+      <div class="content-gap mt-4">
+        <div id="administratorThesesInfoSection" class="panel" style="display:none;"></div>
+        <div id="administratorThesesManagementSection" class="panel" style="display:none;"></div>
+      </div>
+    </section>
 
-        <!------------------ Bootstrap JS ------------------>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/javascript/administrator_script.js"></script>
+    <!-- Insert Data Section -->
+    <section id="administratorInsertDataSection" class="content-section" aria-labelledby="insert-data-heading" style="display:none;">
+      <div class="headerbar">
+        <h3 id="insert-data-heading">Εισαγωγή Δεδομένων</h3>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="panel" style="max-width:620px; width:100%">
+          <h5 class="text-center mb-3">Εισάγετε δεδομένα προς ανάρτηση στη βάση δεδομένων</h5>
+          <p class="text-success mt-1 text-center" id="adminUploadDataLabelArea"></p>
+          <input class="form-control my-2" type="file" id="adminUploadDataButton" accept=".json">
+          <p class="text-center" style="color: rgb(14, 14, 14);">Επιτρέπονται μόνο αρχεία JSON</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="color: rgb(0, 0, 0);">© 2025 Diogenis</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    // Hash routing (ανέπαφο)
+    const sections = [
+      'administratorDashboardSection',
+      'administratorInsertDataSection'
+    ];
+    function showSection(id){
+      sections.forEach(s=>{
+        const el = document.getElementById(s);
+        if(!el) return;
+        el.style.display = (s===id)? 'block':'none';
+      });
+      document.querySelectorAll('.navbar-nav a').forEach(a=>{
+        if(a.getAttribute('href') === '#' + id){ a.classList.add('active'); }
+        else { a.classList.remove('active'); }
+      });
+      window.scrollTo({top:0, behavior:'instant'});
+    }
+    function route(){
+      const hash = location.hash.replace('#','');
+      if(sections.includes(hash)) showSection(hash); else showSection('administratorDashboardSection');
+    }
+    window.addEventListener('hashchange', route);
+    window.addEventListener('DOMContentLoaded', route);
+  </script>
+  <script src="/javascript/administrator_script.js"></script>
 </body>
-
 </html>
